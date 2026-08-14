@@ -91,7 +91,7 @@
     .theme-toggle:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
     .theme-toggle:focus-visible, .social-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
-    .intro { max-width: 680px; }
+    .intro { width: 100%; }
 
     .eyebrow {
       display: flex;
@@ -136,6 +136,7 @@
     .title-image {
       width: clamp(104px, 21vw, 230px);
       height: clamp(104px, 21vw, 230px);
+      margin-left: auto;
       flex: 0 0 auto;
       object-fit: cover;
       filter: drop-shadow(8px 10px 0 var(--accent));
