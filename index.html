@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="devwillsha - developer links" />
   <link rel="icon" type="image/png" href="images/icon.png" />
-  <title>devwillsha</title>
+  <title>SHA | devwillsha</title>
   <link rel="stylesheet" href="styles/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -134,10 +134,23 @@
     }
 
     .title-image {
-      width: clamp(72px, 14vw, 132px);
-      height: clamp(72px, 14vw, 132px);
+      width: clamp(104px, 21vw, 230px);
+      height: clamp(104px, 21vw, 230px);
       flex: 0 0 auto;
       object-fit: cover;
+      filter: drop-shadow(8px 10px 0 var(--accent));
+      transition: transform 260ms ease, filter 260ms ease;
+    }
+
+    .title-image:hover {
+      z-index: 1;
+      transform: translateY(-6px) scale(1.12) rotate(1deg);
+      filter: drop-shadow(12px 14px 0 var(--accent));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .title-image { transition: none; }
+      .title-image:hover { transform: none; }
     }
 
     .intro-copy {
@@ -213,6 +226,7 @@
       .social-grid { grid-template-columns: 1fr; }
       .social-card { min-height: 134px; }
       .footer { gap: 12px; flex-direction: column; }
+      .title-image { width: 104px; height: 104px; }
     }
   </style>
 </head>
@@ -235,7 +249,7 @@
     </section>
 
     <section class="links-section" aria-label="Social links">
-      <div class="section-label"><span>Find me online</span><span>04 links</span></div>
+      <div class="section-label"><span>Find me online</span><span>05 links</span></div>
       <div class="social-grid">
         <a class="social-card" href="https://github.com/devwillsha" target="_blank" rel="noreferrer">
           <div class="card-top"><i class="card-icon fab fa-github" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
@@ -252,6 +266,10 @@
         <a class="social-card" href="mailto:kamalshanthpro@gmail.com">
           <div class="card-top"><i class="card-icon far fa-envelope" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">Email</p></div></div>
+        </a>
+        <a class="social-card" href="tel:+94777914656">
+          <div class="card-top"><i class="card-icon fas fa-phone" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+          <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">+94 777 914 656</p></div></div>
         </a>
       </div>
     </section>
