@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="devwillsha - developer links" />
+  <title>devwillsha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f7f7f4;
+      --surface: #ffffff;
+      --ink: #181818;
+      --muted: #73736e;
+      --line: #dfdfd8;
+      --accent: #e6532e;
+      --accent-soft: #fff0eb;
+      --shadow: 5px 5px 0 #181818;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #151615;
+      --surface: #20211f;
+      --ink: #f3f2ed;
+      --muted: #aaa9a1;
+      --line: #3c3d39;
+      --accent: #ff704b;
+      --accent-soft: #38241e;
+      --shadow: 5px 5px 0 #f3f2ed;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background-color: var(--canvas);
+      background-image: radial-gradient(var(--line) 0.75px, transparent 0.75px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .page {
+      width: min(100% - 40px, 960px);
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: clamp(72px, 14vh, 142px);
+    }
+
+    .wordmark, .eyebrow, .social-kind, .footer {
+      font-family: "DM Mono", monospace;
+      letter-spacing: 0;
+    }
+
+    .wordmark {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .theme-toggle {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .theme-toggle:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+    .theme-toggle:focus-visible, .social-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+    .intro { max-width: 680px; }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 8px;
+      height: 8px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1 {
+      max-width: 610px;
+      margin: 0;
+      font-size: clamp(3rem, 9vw, 6.7rem);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 0.9;
+    }
+
+    .intro-copy {
+      max-width: 430px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .links-section { margin-top: clamp(64px, 12vh, 112px); }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .section-label span:last-child { color: var(--accent); }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .social-card {
+      display: flex;
+      min-height: 174px;
+      padding: 24px;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .social-card:hover {
+      z-index: 1;
+      background: var(--accent);
+      color: #fffaf7;
+      transform: translate(-3px, -3px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-top, .card-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .card-icon { width: 25px; height: 25px; stroke-width: 1.7; }
+    .arrow { width: 20px; height: 20px; }
+    .social-kind { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; }
+    .social-card:hover .social-kind { color: inherit; }
+    .social-name { margin: 7px 0 0; font-size: clamp(1.2rem, 3vw, 1.65rem); font-weight: 600; }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 28px, 960px); padding-top: 18px; }
+      .topbar { margin-bottom: 82px; }
+      .social-grid { grid-template-columns: 1fr; }
+      .social-card { min-height: 134px; }
+      .footer { gap: 12px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <p class="wordmark">devwillsha</p>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch theme">
+        <i data-lucide="moon" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Developer portfolio</p>
+      <h1 id="page-title">devwillsha</h1>
+      <p class="intro-copy">Building thoughtful digital experiences, one clean line of code at a time.</p>
+    </section>
+
+    <section class="links-section" aria-label="Social links">
+      <div class="section-label"><span>Find me online</span><span>04 links</span></div>
+      <div class="social-grid">
+        <a class="social-card" href="https://github.com/" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon" data-lucide="github" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+          <div class="card-bottom"><div><span class="social-kind">Code</span><p class="social-name">GitHub</p></div></div>
+        </a>
+        <a class="social-card" href="https://www.youtube.com/" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon" data-lucide="youtube" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+          <div class="card-bottom"><div><span class="social-kind">Video</span><p class="social-name">YouTube</p></div></div>
+        </a>
+        <a class="social-card" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon" data-lucide="linkedin" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+          <div class="card-bottom"><div><span class="social-kind">Network</span><p class="social-name">LinkedIn</p></div></div>
+        </a>
+        <a class="social-card" href="mailto:hello@devwillsha.com">
+          <div class="card-top"><i class="card-icon" data-lucide="mail" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+          <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">Email</p></div></div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer"><span>© 2026 devwillsha</span><span>Available for interesting work</span></footer>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.querySelector('.theme-toggle');
+    const icon = toggle.querySelector('i');
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme) root.dataset.theme = savedTheme;
+
+    function updateToggle() {
+      const isDark = root.dataset.theme === 'dark';
+      toggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
+      icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+      lucide.createIcons();
+    }
+
+    toggle.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', root.dataset.theme);
+      updateToggle();
+    });
+
+    updateToggle();
+  </script>
+</body>
+</html>
