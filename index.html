@@ -112,6 +112,8 @@
     }
 
     h1 {
+      display: flex;
+      flex-direction: column;
       max-width: 610px;
       margin: 0;
       font-size: clamp(3rem, 9vw, 6.7rem);
@@ -120,8 +122,18 @@
       line-height: 0.9;
     }
 
+    .title-name,
     .title-alias {
       display: block;
+      transition: order 420ms ease, color 420ms ease, transform 420ms ease, font-size 420ms ease;
+    }
+
+    .title-name {
+      order: 1;
+    }
+
+    .title-alias {
+      order: 2;
       color: var(--accent);
       font-size: 0.52em;
       line-height: 1;
@@ -134,13 +146,35 @@
     }
 
     .title-image {
-      width: clamp(104px, 21vw, 230px);
-      height: clamp(104px, 21vw, 230px);
-      margin-left: auto;
+      width: 100%;
+      height: 100%;
       flex: 0 0 auto;
       object-fit: cover;
       filter: drop-shadow(8px 10px 0 var(--accent));
       transition: transform 260ms ease, filter 260ms ease;
+    }
+
+    .image-frame {
+      position: relative;
+      width: clamp(124px, 25vw, 270px);
+      height: clamp(124px, 25vw, 270px);
+      margin-left: auto;
+      flex: 0 0 auto;
+    }
+
+    .image-frame::before {
+      position: absolute;
+      z-index: 2;
+      inset: -11px;
+      border: 2px dashed var(--accent);
+      content: "";
+      pointer-events: none;
+      animation: frame-orbit 8s linear infinite;
+    }
+
+    @keyframes frame-orbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .title-image:hover {
@@ -149,9 +183,27 @@
       filter: drop-shadow(12px 14px 0 var(--accent));
     }
 
+    .title-row:has(.title-image:hover) .title-name {
+      order: 2;
+      color: var(--accent);
+      font-size: 0.52em;
+      line-height: 1;
+      transform: translateY(4px);
+    }
+
+    .title-row:has(.title-image:hover) .title-alias {
+      order: 1;
+      color: var(--ink);
+      font-size: 1em;
+      line-height: 0.9;
+      transform: translateY(-4px);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .title-image { transition: none; }
       .title-image:hover { transform: none; }
+      .title-name, .title-alias { transition: none; }
+      .image-frame::before { animation: none; }
     }
 
     .intro-copy {
@@ -243,8 +295,8 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Developer portfolio</p>
       <div class="title-row">
-        <h1 id="page-title">devwillsha<span class="title-alias">Sha Kamal</span></h1>
-        <img class="title-image" src="images/pic.png" alt="" />
+        <h1 id="page-title"><span class="title-name">devwillsha</span><span class="title-alias">Sha Kamal</span></h1>
+        <div class="image-frame"><img class="title-image" src="images/pic.png" alt="" /></div>
       </div>
       <p class="intro-copy">Backend engineer crafting scalable systems and the infrastructure behind bold digital experiences.</p>
     </section>
