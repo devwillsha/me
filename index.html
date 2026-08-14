@@ -4,34 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="devwillsha - developer links" />
+  <link rel="icon" type="image/png" href="images/icon.png" />
   <title>devwillsha</title>
+  <link rel="stylesheet" href="styles/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="scripts/all.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root {
       color-scheme: light;
-      --canvas: #f7f7f4;
-      --surface: #ffffff;
-      --ink: #181818;
-      --muted: #73736e;
-      --line: #dfdfd8;
-      --accent: #e6532e;
-      --accent-soft: #fff0eb;
-      --shadow: 5px 5px 0 #181818;
+      --canvas: #efffdc;
+      --surface: #f9fff0;
+      --ink: #10233b;
+      --muted: #4e6872;
+      --line: #c2dfb5;
+      --accent: #246bb2;
+      --accent-soft: #dff4c2;
+      --shadow: 5px 5px 0 #10233b;
+      --hover-ink: #fffaf7;
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --canvas: #151615;
-      --surface: #20211f;
-      --ink: #f3f2ed;
-      --muted: #aaa9a1;
-      --line: #3c3d39;
-      --accent: #ff704b;
-      --accent-soft: #38241e;
-      --shadow: 5px 5px 0 #f3f2ed;
+      --canvas: #0b1b2d;
+      --surface: #102940;
+      --ink: #efffdc;
+      --muted: #9bc0b9;
+      --line: #2d5268;
+      --accent: #b8ff65;
+      --accent-soft: #203f35;
+      --shadow: 5px 5px 0 #b8ff65;
+      --hover-ink: #10233b;
     }
 
     * { box-sizing: border-box; }
@@ -115,6 +120,26 @@
       line-height: 0.9;
     }
 
+    .title-alias {
+      display: block;
+      color: var(--accent);
+      font-size: 0.52em;
+      line-height: 1;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 4vw, 40px);
+    }
+
+    .title-image {
+      width: clamp(72px, 14vw, 132px);
+      height: clamp(72px, 14vw, 132px);
+      flex: 0 0 auto;
+      object-fit: cover;
+    }
+
     .intro-copy {
       max-width: 430px;
       margin: 24px 0 0;
@@ -162,13 +187,13 @@
     .social-card:hover {
       z-index: 1;
       background: var(--accent);
-      color: #fffaf7;
+      color: var(--hover-ink);
       transform: translate(-3px, -3px);
       box-shadow: var(--shadow);
     }
 
     .card-top, .card-bottom { display: flex; align-items: center; justify-content: space-between; }
-    .card-icon { width: 25px; height: 25px; stroke-width: 1.7; }
+    .card-icon { width: 25px; font-size: 25px; line-height: 25px; }
     .arrow { width: 20px; height: 20px; }
     .social-kind { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; }
     .social-card:hover .social-kind { color: inherit; }
@@ -202,27 +227,30 @@
 
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Developer portfolio</p>
-      <h1 id="page-title">devwillsha</h1>
-      <p class="intro-copy">Building thoughtful digital experiences, one clean line of code at a time.</p>
+      <div class="title-row">
+        <h1 id="page-title">devwillsha<span class="title-alias">Sha Kamal</span></h1>
+        <img class="title-image" src="images/pic.png" alt="" />
+      </div>
+      <p class="intro-copy">Backend engineer crafting scalable systems and the infrastructure behind bold digital experiences.</p>
     </section>
 
     <section class="links-section" aria-label="Social links">
       <div class="section-label"><span>Find me online</span><span>04 links</span></div>
       <div class="social-grid">
-        <a class="social-card" href="https://github.com/" target="_blank" rel="noreferrer">
-          <div class="card-top"><i class="card-icon" data-lucide="github" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+        <a class="social-card" href="https://github.com/devwillsha" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon fab fa-github" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Code</span><p class="social-name">GitHub</p></div></div>
         </a>
-        <a class="social-card" href="https://www.youtube.com/" target="_blank" rel="noreferrer">
-          <div class="card-top"><i class="card-icon" data-lucide="youtube" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+        <a class="social-card" href="https://www.youtube.com/@devwillsha" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon fab fa-youtube" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Video</span><p class="social-name">YouTube</p></div></div>
         </a>
-        <a class="social-card" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-          <div class="card-top"><i class="card-icon" data-lucide="linkedin" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+        <a class="social-card" href="https://www.linkedin.com/in/devwillsha/" target="_blank" rel="noreferrer">
+          <div class="card-top"><i class="card-icon fab fa-linkedin" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Network</span><p class="social-name">LinkedIn</p></div></div>
         </a>
-        <a class="social-card" href="mailto:hello@devwillsha.com">
-          <div class="card-top"><i class="card-icon" data-lucide="mail" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
+        <a class="social-card" href="mailto:kamalshanthpro@gmail.com">
+          <div class="card-top"><i class="card-icon far fa-envelope" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">Email</p></div></div>
         </a>
       </div>
