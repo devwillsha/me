@@ -13,20 +13,34 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    html { scroll-behavior: smooth; }
+
     :root {
       color-scheme: dark;
-      --canvas: #0c1828;
-      --surface: #142a3a;
-      --ink: #f0f4f8;
-      --muted: #a0b4c8;
-      --line: #1e3a4c;
-      --accent: #5fa8d3;
-      --accent-soft: #1a3a52;
-      --shadow: 5px 5px 0 #5fa8d3;
-      --hover-ink: #0c1828;
+      --canvas: #05070c;
+      --surface: #10141c;
+      --ink: #eef1f5;
+      --muted: #92a0ad;
+      --line: #232a34;
+      --accent: #c7d1db;
+      --accent-soft: #1a1f28;
+      --metal-1: #ffffff;
+      --metal-2: #d7dde3;
+      --metal-3: #8b96a3;
+      --metal-4: #eef1f5;
+      --metal-gradient: linear-gradient(120deg, var(--metal-1) 0%, var(--metal-2) 35%, var(--metal-3) 55%, var(--metal-4) 100%);
+      --shadow: 5px 5px 0 #c7d1db;
+      --hover-ink: #05070c;
     }
 
     * { box-sizing: border-box; }
+
+    .metal-text {
+      background: var(--metal-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
     body {
       min-height: 100vh;
@@ -77,7 +91,11 @@
     }
 
     .nav-link i { width: 14px; height: 14px; }
-    .nav-link:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-link:hover {
+      border-color: var(--accent);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(139, 150, 163, 0.08));
+    }
     .nav-link:focus-visible, .social-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
     .intro { width: 100%; }
@@ -122,7 +140,6 @@
 
     .title-alias {
       order: 2;
-      color: var(--accent);
       font-size: 0.52em;
       line-height: 1;
     }
@@ -173,6 +190,83 @@
       line-height: 1.5;
     }
 
+    .intro-project-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 440px;
+      margin-top: 28px;
+      padding: 16px 20px;
+      border: 1px solid rgba(199, 209, 219, 0.35);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(199, 209, 219, 0.12), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(199, 209, 219, 0.16), inset 0 0 20px rgba(199, 209, 219, 0.05);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .intro-project-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--metal-gradient);
+      color: var(--hover-ink);
+    }
+
+    .intro-project-icon i { width: 20px; height: 20px; }
+
+    .intro-project-body { flex: 1; min-width: 0; }
+
+    .intro-project-eyebrow {
+      display: block;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .intro-project-name {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .intro-project-tag {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .intro-project-arrow {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+    }
+
+    .intro-project-link:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(199, 209, 219, 0.32), inset 0 0 24px rgba(199, 209, 219, 0.09);
+    }
+
+    .intro-project-link:hover .intro-project-arrow {
+      border-color: var(--accent);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(139, 150, 163, 0.08));
+    }
+
     .links-section { margin-top: clamp(64px, 12vh, 112px); }
 
     .section-label {
@@ -210,7 +304,7 @@
 
     .social-card:hover {
       z-index: 1;
-      background: var(--accent);
+      background: var(--metal-gradient);
       color: var(--hover-ink);
       box-shadow: var(--shadow);
     }
@@ -230,7 +324,7 @@
       font-size: 0.7rem;
     }
 
-    .project-showcase { margin-top: clamp(64px, 12vh, 112px); }
+    .project-showcase { margin-top: clamp(64px, 12vh, 112px); scroll-margin-top: 60px; }
 
     .project-heading {
       margin: 0;
@@ -486,6 +580,8 @@
       .footer { gap: 12px; flex-direction: column; }
       .step-grid { grid-template-columns: 1fr; }
       .flow-steps li { flex-direction: column; gap: 6px; }
+      .intro-project-link { max-width: 100%; padding: 14px 16px; }
+      .intro-project-arrow { display: none; }
     }
   </style>
 </head>
@@ -499,10 +595,19 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Developer portfolio</p>
       <div class="title-row">
-        <h1 id="page-title"><span class="title-name">devwillsha</span><span class="title-alias">Sha Kamal</span></h1>
+        <h1 id="page-title"><span class="title-name">devwillsha</span><span class="title-alias metal-text">Sha Kamal</span></h1>
         <div class="image-frame"><img class="title-image" src="images/pic.png" alt="" /></div>
       </div>
       <p class="intro-copy">Backend engineer crafting scalable systems and the infrastructure behind bold digital experiences.</p>
+      <a class="intro-project-link" href="#voidcut-project">
+        <span class="intro-project-icon"><i data-lucide="film" aria-hidden="true"></i></span>
+        <span class="intro-project-body">
+          <span class="intro-project-eyebrow">Featured build</span>
+          <span class="intro-project-name metal-text">Voidcut</span>
+          <span class="intro-project-tag">Event-driven video editor - Go microservices</span>
+        </span>
+        <span class="intro-project-arrow"><i data-lucide="arrow-right" aria-hidden="true"></i></span>
+      </a>
     </section>
 
     <section class="links-section" aria-label="Social links">
@@ -533,7 +638,7 @@
 
     <section class="project-showcase" id="voidcut-project" aria-labelledby="voidcut-title">
       <div class="section-label"><span>Project blueprint</span><span>voidcut</span></div>
-      <h2 id="voidcut-title" class="project-heading">Voidcut</h2>
+      <h2 id="voidcut-title" class="project-heading metal-text">Voidcut</h2>
       <p class="project-lead">A smart video editor that runs in the background while you record. Logs mic and keyboard activity in real time, then uses that activity log to cut dead air after you upload the recording. Built as a full event-driven distributed microservices system in Go.</p>
 
       <div class="project-links">
