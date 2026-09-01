@@ -17,7 +17,7 @@
 
     :root {
       color-scheme: dark;
-      --canvas: #05070c;
+      --canvas: #0b111c;
       --surface: #10141c;
       --ink: #eef1f5;
       --muted: #92a0ad;
@@ -35,6 +35,24 @@
 
     * { box-sizing: border-box; }
 
+    .grid-glow {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(199, 209, 219, 0.55) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 209, 219, 0.55) 1px, transparent 1px);
+      background-size: 44px 44px, 44px 44px;
+      -webkit-mask-image: radial-gradient(circle 200px at var(--mx, 50vw) var(--my, 50vh), #000 0%, transparent 72%);
+      mask-image: radial-gradient(circle 200px at var(--mx, 50vw) var(--my, 50vh), #000 0%, transparent 72%);
+      transform: translate(calc((var(--mx, 50vw) - 50vw) * 0.03), calc((var(--my, 50vh) - 50vh) * 0.03));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .grid-glow { display: none; }
+    }
+
     .metal-text {
       background: var(--metal-gradient);
       -webkit-background-clip: text;
@@ -46,8 +64,14 @@
       min-height: 100vh;
       margin: 0;
       background-color: var(--canvas);
-      background-image: radial-gradient(var(--line) 0.75px, transparent 0.75px);
-      background-size: 18px 18px;
+      background-image:
+        radial-gradient(ellipse 60% 45% at 15% 10%, rgba(199, 209, 219, 0.14), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 85%, rgba(139, 150, 163, 0.1), transparent 65%),
+        radial-gradient(ellipse 35% 30% at 90% 12%, rgba(255, 255, 255, 0.08), transparent 60%),
+        linear-gradient(rgba(199, 209, 219, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 209, 219, 0.09) 1px, transparent 1px);
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+      background-size: auto, auto, auto, 44px 44px, 44px 44px;
       color: var(--ink);
       font-family: "Space Grotesk", sans-serif;
     }
@@ -76,25 +100,117 @@
       font-weight: 500;
     }
 
+    .wordmark-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: none;
+      background: none;
+      padding: 0;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .wordmark-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.85), 0 0 16px 5px rgba(255, 255, 255, 0.45);
+      animation: dot-pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.85), 0 0 16px 5px rgba(255, 255, 255, 0.45);
+      }
+      50% {
+        opacity: 0.45;
+        box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.3), 0 0 6px 2px rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    .current-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(180deg, #ffffff, var(--accent));
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      z-index: 2000;
+      pointer-events: none;
+      transition: opacity 300ms ease;
+    }
+
+    .current-line.active { opacity: 1; }
+
+    .current-line-v {
+      width: 2px;
+      height: 0;
+      transform: translateX(-50%);
+    }
+
+    .current-line-h {
+      height: 2px;
+      width: 0;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, #ffffff, var(--accent));
+    }
+
+    @keyframes section-flash {
+      0% { box-shadow: 0 0 0 rgba(238, 241, 245, 0); }
+      35% { box-shadow: 0 0 90px rgba(238, 241, 245, 0.6); }
+      100% { box-shadow: 0 0 60px rgba(238, 241, 245, 0.28); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wordmark-dot { animation: none; }
+      .project-showcase.metal-active { animation: none; }
+    }
+
+    .project-showcase.metal-active {
+      --canvas: #ffffff;
+      --surface: #ffffff;
+      --ink: #05070c;
+      --muted: #3a4249;
+      --line: rgba(5, 7, 12, 0.18);
+      --accent: #05070c;
+      --shadow: 5px 5px 0 #05070c;
+      --hover-ink: #ffffff;
+      border-color: rgba(5, 7, 12, 0.22);
+      background: var(--metal-gradient);
+      color: #05070c;
+      box-shadow: 0 0 60px rgba(238, 241, 245, 0.28);
+      animation: section-flash 900ms ease-out;
+    }
+
+    .project-showcase.metal-active .metal-text {
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: #05070c;
+    }
+
     .nav-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 9px 16px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(5, 7, 12, 0.15);
       border-radius: 999px;
-      background: var(--surface);
-      color: var(--ink);
+      background: var(--metal-gradient);
+      color: #05070c;
       font-family: "DM Mono", monospace;
       font-size: 0.8rem;
+      font-weight: 600;
       text-decoration: none;
     }
 
     .nav-link i { width: 14px; height: 14px; }
     .nav-link:hover {
-      border-color: var(--accent);
-      color: #ffffff;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(139, 150, 163, 0.08));
+      box-shadow: 0 0 24px rgba(238, 241, 245, 0.3);
     }
     .nav-link:focus-visible, .social-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
@@ -158,11 +274,14 @@
     }
 
     .title-image {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
       flex: 0 0 auto;
       object-fit: cover;
-      filter: drop-shadow(8px 10px 0 var(--accent));
+      border-radius: 24px;
+      transition: transform 420ms ease;
     }
 
     .image-frame {
@@ -173,13 +292,31 @@
       flex: 0 0 auto;
     }
 
-    .image-frame::before {
-      position: absolute;
-      z-index: 2;
-      inset: -11px;
-      border: 2px dashed var(--accent);
+    .image-frame::after {
       content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 14%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0%, var(--accent) 45%, transparent 72%);
+      opacity: 0;
+      transform: scale(0.4);
+      filter: blur(10px);
+      transition: opacity 420ms ease, transform 420ms ease;
       pointer-events: none;
+    }
+
+    .image-frame:hover .title-image {
+      transform: scale(1.06) translateY(-8px);
+    }
+
+    .image-frame:hover::after {
+      opacity: 0.9;
+      transform: scale(1.25);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .title-image, .image-frame::after { transition: none; }
     }
 
     .intro-copy {
@@ -285,8 +422,7 @@
     .social-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
+      gap: 16px;
     }
 
     .social-card {
@@ -295,18 +431,73 @@
       padding: 24px;
       flex-direction: column;
       justify-content: space-between;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--surface);
+      border: 1px solid rgba(199, 209, 219, 0.35);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(199, 209, 219, 0.12), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(199, 209, 219, 0.16), inset 0 0 20px rgba(199, 209, 219, 0.05);
       color: var(--ink);
       text-decoration: none;
     }
 
     .social-card:hover {
       z-index: 1;
-      background: var(--metal-gradient);
-      color: var(--hover-ink);
-      box-shadow: var(--shadow);
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(199, 209, 219, 0.32), inset 0 0 24px rgba(199, 209, 219, 0.09);
+    }
+
+    .social-card-github {
+      border-color: rgba(240, 244, 248, 0.35);
+      background: linear-gradient(135deg, rgba(240, 244, 248, 0.14), rgba(10, 10, 12, 0.28));
+      box-shadow: 0 0 26px rgba(0, 0, 0, 0.32), inset 0 0 20px rgba(240, 244, 248, 0.06);
+    }
+
+    .social-card-github:hover {
+      border-color: #f0f4f8;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.45), inset 0 0 24px rgba(240, 244, 248, 0.1);
+    }
+
+    .social-card-youtube {
+      border-color: rgba(255, 60, 60, 0.4);
+      background: linear-gradient(135deg, rgba(255, 60, 60, 0.14), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(255, 40, 40, 0.22), inset 0 0 20px rgba(255, 40, 40, 0.06);
+    }
+
+    .social-card-youtube:hover {
+      border-color: #ff4d4d;
+      box-shadow: 0 0 40px rgba(255, 40, 40, 0.4), inset 0 0 24px rgba(255, 40, 40, 0.12);
+    }
+
+    .social-card-linkedin {
+      border-color: rgba(10, 102, 194, 0.4);
+      background: linear-gradient(135deg, rgba(10, 102, 194, 0.16), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(10, 102, 194, 0.24), inset 0 0 20px rgba(10, 102, 194, 0.06);
+    }
+
+    .social-card-linkedin:hover {
+      border-color: #2d9cff;
+      box-shadow: 0 0 40px rgba(10, 102, 194, 0.42), inset 0 0 24px rgba(10, 102, 194, 0.12);
+    }
+
+    .social-card-email {
+      border-color: rgba(255, 140, 40, 0.4);
+      background: linear-gradient(135deg, rgba(255, 140, 40, 0.16), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(255, 140, 40, 0.24), inset 0 0 20px rgba(255, 140, 40, 0.06);
+    }
+
+    .social-card-email:hover {
+      border-color: #ff9c4d;
+      box-shadow: 0 0 40px rgba(255, 140, 40, 0.42), inset 0 0 24px rgba(255, 140, 40, 0.12);
+    }
+
+    .social-card-phone {
+      border-color: rgba(46, 204, 113, 0.4);
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.16), rgba(139, 150, 163, 0.04));
+      box-shadow: 0 0 26px rgba(46, 204, 113, 0.24), inset 0 0 20px rgba(46, 204, 113, 0.06);
+    }
+
+    .social-card-phone:hover {
+      border-color: #2ecc71;
+      box-shadow: 0 0 40px rgba(46, 204, 113, 0.42), inset 0 0 24px rgba(46, 204, 113, 0.12);
     }
 
     .card-top, .card-bottom { display: flex; align-items: center; justify-content: space-between; }
@@ -324,7 +515,16 @@
       font-size: 0.7rem;
     }
 
-    .project-showcase { margin-top: clamp(64px, 12vh, 112px); scroll-margin-top: 60px; }
+    .project-showcase {
+      margin-top: clamp(64px, 12vh, 112px);
+      scroll-margin-top: 60px;
+      padding: clamp(28px, 5vw, 48px);
+      border: 1px solid rgba(199, 209, 219, 0.22);
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(199, 209, 219, 0.06), rgba(139, 150, 163, 0.02));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
 
     .project-heading {
       margin: 0;
@@ -371,10 +571,21 @@
       box-shadow: 0 0 22px rgba(240, 244, 248, 0.16), inset 0 0 18px rgba(240, 244, 248, 0.05);
     }
 
+    .project-showcase.metal-active .project-link.github {
+      border-color: rgba(5, 7, 12, 0.4);
+      box-shadow: 0 0 22px rgba(5, 7, 12, 0.22), inset 0 0 18px rgba(5, 7, 12, 0.06);
+    }
+
     .project-link.github:hover {
       border-color: #f0f4f8;
       color: #ffffff;
       box-shadow: 0 0 34px rgba(240, 244, 248, 0.36), inset 0 0 22px rgba(240, 244, 248, 0.1);
+    }
+
+    .project-showcase.metal-active .project-link.github:hover {
+      border-color: #05070c;
+      color: #05070c;
+      box-shadow: 0 0 34px rgba(5, 7, 12, 0.45), inset 0 0 22px rgba(5, 7, 12, 0.14);
     }
 
     .project-link.youtube {
@@ -412,14 +623,14 @@
     .step-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
+      gap: 16px;
     }
 
     .step-card {
       padding: 22px;
       background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
     }
 
     .step-num {
@@ -455,6 +666,7 @@
       padding: 26px 20px;
       margin-bottom: 22px;
       border: 1px solid var(--line);
+      border-radius: 20px;
       background: var(--surface);
       overflow-x: auto;
     }
@@ -477,11 +689,12 @@
       top: 50%;
       height: 1px;
       background: var(--line);
+      z-index: 0;
     }
 
     .flow-node {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       padding: 8px 14px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -494,6 +707,7 @@
 
     .flow-dot {
       position: absolute;
+      z-index: 1;
       top: 50%;
       left: 0;
       width: 9px;
@@ -526,6 +740,8 @@
       list-style: none;
       background: var(--line);
       border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
     .flow-steps li {
@@ -586,9 +802,13 @@
   </style>
 </head>
 <body>
+  <div class="grid-glow" aria-hidden="true"></div>
   <main class="page">
     <header class="topbar">
-      <p class="wordmark">devwillsha</p>
+      <button class="wordmark wordmark-btn" type="button" id="voidcut-beam-trigger" aria-label="Send a current down to the Voidcut section">
+        <span class="wordmark-dot" aria-hidden="true"></span>
+        <span>devwillsha</span>
+      </button>
       <a class="nav-link" href="#voidcut-project"><span>voidcut</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
     </header>
 
@@ -613,23 +833,23 @@
     <section class="links-section" aria-label="Social links">
       <div class="section-label"><span>Find me online</span><span>05 links</span></div>
       <div class="social-grid">
-        <a class="social-card" href="https://github.com/devwillsha" target="_blank" rel="noreferrer">
+        <a class="social-card social-card-github" href="https://github.com/devwillsha" target="_blank" rel="noreferrer">
           <div class="card-top"><i class="card-icon fab fa-github" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Code</span><p class="social-name">GitHub</p></div></div>
         </a>
-        <a class="social-card" href="https://www.youtube.com/@devwillsha" target="_blank" rel="noreferrer">
+        <a class="social-card social-card-youtube" href="https://www.youtube.com/@devwillsha" target="_blank" rel="noreferrer">
           <div class="card-top"><i class="card-icon fab fa-youtube" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Video</span><p class="social-name">YouTube</p></div></div>
         </a>
-        <a class="social-card" href="https://www.linkedin.com/in/devwillsha/" target="_blank" rel="noreferrer">
+        <a class="social-card social-card-linkedin" href="https://www.linkedin.com/in/devwillsha/" target="_blank" rel="noreferrer">
           <div class="card-top"><i class="card-icon fab fa-linkedin" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Network</span><p class="social-name">LinkedIn</p></div></div>
         </a>
-        <a class="social-card" href="mailto:kamalshanthpro@gmail.com">
+        <a class="social-card social-card-email" href="mailto:kamalshanthpro@gmail.com">
           <div class="card-top"><i class="card-icon far fa-envelope" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">Email</p></div></div>
         </a>
-        <a class="social-card" href="tel:+94777914656">
+        <a class="social-card social-card-phone" href="tel:+94777914656">
           <div class="card-top"><i class="card-icon fas fa-phone" aria-hidden="true"></i><i class="arrow" data-lucide="arrow-up-right" aria-hidden="true"></i></div>
           <div class="card-bottom"><div><span class="social-kind">Contact</span><p class="social-name">+94 777 914 656</p></div></div>
         </a>
@@ -817,8 +1037,107 @@
     <footer class="footer"><span>© 2026 devwillsha</span><span>Available for interesting work</span></footer>
   </main>
 
+  <div class="current-line current-line-h" id="current-line-left" aria-hidden="true"></div>
+  <div class="current-line current-line-v" id="current-line-down" aria-hidden="true"></div>
+  <div class="current-line current-line-h" id="current-line-right" aria-hidden="true"></div>
+
   <script>
     lucide.createIcons();
+
+    const rootEl = document.documentElement;
+    window.addEventListener('mousemove', (e) => {
+      rootEl.style.setProperty('--mx', e.clientX + 'px');
+      rootEl.style.setProperty('--my', e.clientY + 'px');
+    });
+
+    const beamTrigger = document.getElementById('voidcut-beam-trigger');
+    const lineLeft = document.getElementById('current-line-left');
+    const lineDown = document.getElementById('current-line-down');
+    const lineRight = document.getElementById('current-line-right');
+    const voidcutSection = document.getElementById('voidcut-project');
+    const voidcutTitle = document.getElementById('voidcut-title');
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    function tween(duration, onUpdate, onDone) {
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min((now - start) / duration, 1);
+        onUpdate(easeInOutQuad(t));
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else if (onDone) {
+          onDone();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    beamTrigger.addEventListener('click', () => {
+      const dotRect = beamTrigger.querySelector('.wordmark-dot').getBoundingClientRect();
+      const titleRect = voidcutTitle.getBoundingClientRect();
+      const pageRect = document.querySelector('.page').getBoundingClientRect();
+
+      const startX = dotRect.left + dotRect.width / 2 + window.scrollX;
+      const startY = dotRect.top + dotRect.height / 2 + window.scrollY;
+      const targetY = titleRect.top + titleRect.height / 2 + window.scrollY;
+      const targetX = titleRect.left + window.scrollX;
+      let railX = Math.max(8, pageRect.left + window.scrollX - 22);
+      if (startX - railX < 100) {
+        railX = Math.max(8, startX - 100);
+      }
+
+      const leftDistance = Math.max(startX - railX, 0);
+      const dropDistance = Math.max(targetY - startY, 0);
+      const rightDistance = Math.max(targetX - railX, 0);
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+
+      voidcutSection.classList.remove('metal-active');
+      [lineLeft, lineDown, lineRight].forEach((el) => el.classList.remove('active'));
+
+      // phase 1: step left, clearing the page content, before heading down
+      lineLeft.style.top = startY + 'px';
+      lineLeft.style.left = startX + 'px';
+      lineLeft.style.width = '0px';
+      lineLeft.classList.add('active');
+
+      tween(500, (p) => {
+        const w = leftDistance * p;
+        lineLeft.style.width = w + 'px';
+        lineLeft.style.left = (startX - w) + 'px';
+      }, () => {
+        // phase 2: straight down along the clear side rail, scroll follows the edge
+        lineDown.style.top = startY + 'px';
+        lineDown.style.left = railX + 'px';
+        lineDown.style.height = '0px';
+        lineDown.classList.add('active');
+
+        tween(2400, (p) => {
+          const h = dropDistance * p;
+          lineDown.style.height = h + 'px';
+          const edgeY = startY + h;
+          const desired = Math.min(Math.max(edgeY - window.innerHeight * 0.4, 0), maxScroll);
+          window.scrollTo({ top: desired, behavior: 'auto' });
+        }, () => {
+          // phase 3: strike right to touch the title and light up the section
+          lineRight.style.top = targetY + 'px';
+          lineRight.style.left = railX + 'px';
+          lineRight.style.width = '0px';
+          lineRight.classList.add('active');
+
+          tween(450, (p) => {
+            lineRight.style.width = (rightDistance * p) + 'px';
+          }, () => {
+            voidcutSection.classList.add('metal-active');
+            setTimeout(() => {
+              [lineLeft, lineDown, lineRight].forEach((el) => el.classList.remove('active'));
+            }, 350);
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>
